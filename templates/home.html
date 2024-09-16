@@ -1,0 +1,57 @@
+<html>
+<head>
+</head>
+<body>
+<h1>Welcome {{username}}</h1>
+
+<form action="/post" method="POST" enctype="multipart/form-data">
+    <input style="display:none" type="text" value={{username}} name="username" required/>
+    
+	<input type="file" accept="image/png, image/jpeg" name='file' placeholder="post" required/>
+        </br>
+    <input type="text" name="caption" placeholder="Enter a photo caption" />
+    <h1>Select a Friendgroup</h1>
+    <input type="checkbox" name="allFollowers" value=1>All Friend Groups</input>
+    <h3>Or select individual groups</h3>
+    <div>
+        {%for group in groups%}
+            <input type="checkbox" name="friendGroup">{{group.groupName}}</input>
+        {%endfor%}
+    </div>
+    <input type="submit" value="Post"/>
+</form>
+<h1>Wanna create a friendgroup?</h1>
+<form action="/addFriendGroup" method="POST">
+    <input type="text" name="groupName" placeholder="Enter the group name..."></input>
+    <input type="text" name="description" placeholder="Enter something cool about the group..."></input>
+    <input type="submit" value="Add Group"/>
+</form>
+{%if groupErr%}
+    <p class="error"><strong>ERROR:</strong> Friendgroup already exists! </p>
+{%endif%}
+
+<h1>Wanna delete a friendgroup?</h1>
+<form action="/removeFriendGroup" method="POST">
+    <input type="text" name="groupname" placeholder="Enter the group name..."></input>
+    <input type="submit" value="delete Group"/>
+</form>
+{%if removeErr%}
+    <p class="error"><strong>ERROR:</strong> Friendgroup does`nt exists! </p>
+{%endif%}
+<a href="/view">View Posts</a>
+<a href = "/search_bar_tag">Search by Tag</a>
+<a href = "/search_bar_poster">Search by Poster</a>
+</br>
+</br>
+
+<a href="/logout">Logout</a>
+
+</body>
+
+<style type="text/css">
+    table, th, td{
+        border: 1px solid black;
+    }
+</style>
+
+</html>

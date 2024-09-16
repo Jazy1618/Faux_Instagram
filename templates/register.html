@@ -1,0 +1,14 @@
+
+<form action="/registerAuth" method="POST">
+    <input type="text" name = "username" placeholder = "username" required/></br>
+    <input type="password" name = "password" placeholder = "password" required/></br>
+    <input type="text" name = "firstName" placeholder = "First Name" required/></br>
+    <input type="text" name = "lastName" placeholder = "Last Name" required/></br>
+    <input type="text" name = "bio" placeholder = "Enter something about you.." required/></br>
+    <input type="submit" value = Login></input>
+    {% if err %}
+        <p class="error"><strong>ERROR:</strong> {{error}} </p>
+    {% endif %}
+</form>
+
+

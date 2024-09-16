@@ -1,0 +1,38 @@
+<!-- Raina Kim -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
+<body>
+{% if err %}
+    <p><strong>ERROR:</strong>Tag doesn`t Exist.</p>
+    
+{% endif %}
+<table>
+
+{% for line in images %}
+    <tr>
+        <td>{{line.photoID}}</td>
+        <td>{{line.postingdate}}</td>
+        <td>{{line.photoPoster}}</td>
+        <td>{{line.caption}}</td>
+    </tr>
+    <tr>
+        <th>Photo</th>
+    </tr>
+    <tr>
+        <td><img src="{{line.filepath}}" width="600"></td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>

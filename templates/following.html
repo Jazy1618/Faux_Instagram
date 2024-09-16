@@ -1,0 +1,102 @@
+<!-- Jasmine Amani Murphy -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Following</title>
+</head>
+<body>
+<h1>Who would you like to follow?<h1>
+<!-- Search for username -->
+<form action="/following" method="GET">
+  Enter a valid username: <input type="text" name="search">
+  <input type="submit" value="Search">
+</form>
+
+<!-- Request to Follow Other Users -->
+<div>
+  <h2>Users Available to Follow</h2>
+  <!-- Error message if the request is a duplicate in the follow table -->
+  {% if error %}
+    <p class="error"><strong>ERROR: {{error}}</strong></p>
+  <!-- Confirmation of request being sent -->
+  {% elif success %}
+    <p>{{success}}</p>
+  {% else %}
+    <!-- Display users that can be followed -->
+    {% if (length1) %}
+      {% for user in searchResults %}
+        <form action="/requestsent" method="POST">
+          <input type="checkbox" name="followMe" value={{user.username}}>{{user.username}}: {{user.firstName}} {{user.lastName}}</input>
+          <input type="submit" value="Request to Follow {{user.username}}"/>
+        </form>
+      {% endfor %}
+    {% else %}
+    <!-- If username does not exist -->
+      <p>There is no account with that username.</p>
+    {% endif %}
+  {% endif %}
+</div>
+
+<br>
+<br>
+<br>
+
+<!-- Accept/Decline Follow Requests from Other Users -->
+<div>
+  <h2>Requests to Follow You</h2>
+  <!-- Confirmation that follow request was accepted -->
+  {% if accept %}
+    <p>{{accept}}</p>
+  <!-- Confirmation that follow request was declined -->
+  {% elif decline %}
+    <p>{{decline}}</p>
+  {% endif %}
+  <!-- Display requests to follow user -->
+  {% if (length2) %}
+    {% for user in pendingFollowers %}
+      <form action="/acceptDecline" method="POST">
+        <!-- <input type="checkbox" name="followMe" value={{user.username}}>{{user.username}}: {{user.firstName}} {{user.lastName}}</input> -->
+        <p>{{user.username}}: {{user.firstName}} {{user.lastName}}</p>
+        <input type="radio" name="requestAction" value=1>Accept Follow Request from {{user.username}}</input>
+        <br>
+        <input type="radio" name="requestAction" value=0>Decline Follow Request from {{user.username}}</input>
+        <input type="hidden" name="followName" value={{user.username}}>
+        <br>
+        <input type="submit" value="Submit"/>
+      </form>
+    {% endfor %}
+  {% else %}
+    <p>You have no pending follow requests.</p>
+  {% endif %}
+</div>
+
+<br>
+<br>
+<br>
+
+<!-- Display Current Followers -->
+<div style="float: left; border-right:solid;">
+  <h2>Your Current Followers</h2>
+  {% if (length3) %}
+    {% for user in currentFollowers %}
+      <p>{{user.username}}</p>
+    {% endfor %}
+  {% else %}
+    <p>You have no followers.</p>
+  {% endif %}
+</div>
+
+<!-- Display Who You Currently Follow -->
+<div style="float: left; border-left:solid;">
+  <h2>Who You Follow</h2>
+  {% if (length4) %}
+    {% for user in iFollow %}
+      <p>{{user.username}}</p>
+    {% endfor %}
+  {% else %}
+    <p>You do not follow anyone.</p>
+  {% endif %}
+</div>
+</body>
+</html>
